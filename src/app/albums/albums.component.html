@@ -1,0 +1,82 @@
+<div class="row content">
+
+  <div class="col-sm-4 video">
+      <app-album-details
+        [album]="selectedAlbum"
+        [title]="title"
+        (onPlay)="playParent($event)">
+      </app-album-details>
+  </div><!-- .video -->
+  <div class="col-sm-8 music">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">Previous</a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="#">1</a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="#">2</a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="#">3</a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+          </li>
+      </ul>
+    </nav><!-- .pagination -->
+    <button type="button" class="btn btn-lg btn-danger">You are in an anonymous mode.</button>
+
+    <div class="card" *ngFor="let album of albums; let index = index;">
+      <div  class="card-header">
+        {{ index + 1 }} - {{ album.ref }}  <span *ngIf="album.status === 'on'">[play]</span>
+      </div>
+      <div class="card-body">
+        <h5 [ngClass]="{'card-title': true, 'card-title-search': isSearch}">
+          <a routerLink="/album/{{album.id}}" >{{ album.title }}</a>
+        </h5>
+        <p class="card-text">{{ album.description }}</p>
+        <ul *ngIf="album.tags" class="list-inline">
+          <li class="list-inline-item" *ngFor="let word of album.tags">
+            <span class="badge badge-info">{{ word }}</span>
+          </li>
+        </ul>
+        <a class="btn btn-outline-dark" href="#" role="button">en</a>
+        <ng-template [ngIf]="album.like">
+          <img class="glyph-icon" src="./assets/svg/si-glyph-heart.svg" />
+          <small>{{ album.like }}</small>
+        </ng-template>
+
+        <ng-template [ngIf]="album.duration">
+          <img class="glyph-icon" src="./assets/svg/si-glyph-timer.svg" />
+          <small>{{ album.duration }} min</small>
+        </ng-template>
+
+        <button (click)="onSelect(album, $event)" class="btn btn-dark">Details</button>
+      </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav><!-- .pagination -->
+  </div><!-- .music -->
+
+</div>
