@@ -10,3 +10,8 @@ export class Album {
   tags?: Array<string>;
   like?: string;
 }
+
+export class List {
+  id: string;
+  list: Array<string>;
+}

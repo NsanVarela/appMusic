@@ -15,8 +15,19 @@ export class AlbumsComponent implements OnInit {
   albums: Album[] = ALBUMS;
   selectedAlbum: Album;
   title: string;
+  albumId: string;
 
-  constructor(private aS: AlbumService) { }
+  constructor(private albumS: AlbumService) {
+
+    // tester ici les méthodes demandées
+    this.albumId = `2`;
+    this.albumS.getAlbums();
+    console.log(this.albumS.getAlbums());
+    this.albumS.getAlbum(this.albumId);
+    console.log(this.albumS.getAlbum(this.albumId));
+    this.albumS.getAlbumList(this.albumId);
+    console.log(this.albumS.getAlbumList(this.albumId));
+  }
 
   ngOnInit() {
   }
