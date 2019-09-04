@@ -14,6 +14,7 @@
     </app-search>
 
   </div><!-- .video -->
+
   <div class="col-sm-8 music">
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
@@ -34,37 +35,56 @@
           </li>
       </ul>
     </nav><!-- .pagination -->
-    <button type="button" class="btn btn-sm btn-outline-danger">You are in an anonymous mode.</button>
+    <button type="button" class="btn btn-sm btn-outline-danger">
+      You are in an anonymous mode.
+    </button>
 
     <!-- <button *ngIf="isSearch" type="button" class="btn btn-lg btn-danger">Résultat de la recherche...</button> -->
     <button *ngIf="isSearch" (click)="reload()" type="button" class="btn btn-sm btn-outline-dark">Ré-affichez tous les albums.</button>
 
     <div class="card" *ngFor="let album of albums; let index = index;">
       <div  class="card-header">
-        {{ index + 1 }} - {{ album.ref }}  <span *ngIf="album.status === 'on'">[play]</span>
+        {{ index + 1 }} - {{ album.ref }}
+        <span *ngIf="album.status === 'on'">
+          [play]
+        </span>
       </div>
       <div class="card-body">
         <h5 [ngClass]="{'card-title': true, 'card-title-search': isSearch}">
-          <a routerLink="/album/{{album.id}}" >{{ album.title }}</a>
+            <a class="text-info" routerLink="/album/{{album.id}}">
+              {{ album.title }}
+            </a>
         </h5>
-        <p class="card-text">{{ album.description }}</p>
+        <p class="card-text">
+          {{ album.description }}
+        </p>
         <ul *ngIf="album.tags" class="list-inline">
           <li class="list-inline-item" *ngFor="let word of album.tags">
-            <span class="badge badge-info">{{ word }}</span>
+            <span class="badge badge-info">
+              {{ word }}
+            </span>
           </li>
         </ul>
-        <a class="btn btn-outline-dark" href="#" role="button">en</a>
+        <a class="btn btn-outline-dark" href="#" role="button">
+          en
+        </a>
         <ng-template [ngIf]="album.like">
           <img class="glyph-icon" src="./assets/svg/si-glyph-heart.svg" />
-          <small>{{ album.like }}</small>
+          <small>
+            {{ album.like }}
+          </small>
         </ng-template>
 
         <ng-template [ngIf]="album.duration">
           <img class="glyph-icon" src="./assets/svg/si-glyph-timer.svg" />
-          <small>{{ album.duration }} min</small>
+          <small>
+            {{ album.duration }} min
+          </small>
         </ng-template>
 
-        <button (click)="onSelect(album, $event)" class="btn btn-sm btn-dark">Details</button>
+        <button (click)="onSelect(album, $event)" class="btn btn-sm btn-dark">
+          Details
+        </button>
       </div>
     </div>
 

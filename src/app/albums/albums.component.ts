@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Album } from '../album'; // def du type
 import { ALBUMS } from '../mock-albums'; // données d'exemple
 import { AlbumService } from '../album.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-albums',
@@ -17,26 +18,22 @@ export class AlbumsComponent implements OnInit {
   title: string;
   albumId: string;
   searchAlbum: Album[];
-  isSearch : boolean = false;
-  albumPerPage : number = 3;
+  isSearch = false;
+  albumPerPage = 3;
 
-  constructor(private albumS: AlbumService) {
+  constructor(private route: ActivatedRoute ,private albumS: AlbumService) {
 
     // tester ici les méthodes demandées
     this.albumId = `2`;
 
     this.albumS.getAlbums();
     // console.log(`Tous les albums`, this.albumS.getAlbums());
-
     this.albumS.getAlbum(this.albumId);
     // console.log(`Album par Id`, this.albumS.getAlbum(this.albumId));
-
     this.albumS.getAlbumList(this.albumId);
     // console.log(`Liste de l'album par Id`, this.albumS.getAlbumList(this.albumId));
-
     this.albumS.count();
     // console.log(`nbre d'albums`, this.albumS.count());
-
     this.albumS.paginate(1, 3);
     // console.log(`pagination 0 à 3`, this.albumS.paginate(0, 3));
 
@@ -47,6 +44,10 @@ export class AlbumsComponent implements OnInit {
 
   onSelect(album: Album) {
     this.selectedAlbum = { ...album};
+    const id = this.selectedAlbum.id;
+    console.log('id', id)
+    const albumList = this.albumS.getAlbumList(id);
+    console.log('albumList', albumList)
   }
 
   playParent($event: Album) {
@@ -74,8 +75,7 @@ export class AlbumsComponent implements OnInit {
 
   // reload déclenché à partir d'un événement de l'enfant
   relaodParent($event: boolean) {
-    this.isSearch = false; // propre à ce component bouton rouge c'est autre chose (...)
-
+    this.isSearch = false;
     // remettre tous les albums
     this.albums = this.albumS.paginate(0, this.albumPerPage);
   }

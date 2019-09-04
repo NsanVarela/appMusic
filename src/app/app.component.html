@@ -8,19 +8,25 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                  <a class="nav-link" href="#">Home
+                  <a class="nav-link" routerLink="/albums">Home
                       <span class="sr-only">(current)</span>
                   </a>
               </li>
               <li class="nav-item active">
-                  <a class="nav-link" href="#">Se connecter
+                  <a class="nav-link" routerLink="/login" routerLinkActive="active">Se connecter
                       <span class="sr-only">(current)</span>
                   </a>
               </li>
           </ul>
-          
+
+          <!-- <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+              <a class="nav-link" routerLink="/login" routerLinkActive="active">Se connecter
+              </a>
+              </li>
+              </ul> -->
       </div>
   </nav>
-  <app-albums></app-albums>
+  <router-outlet></router-outlet>
 
 </div>

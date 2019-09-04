@@ -7,13 +7,17 @@ import { AppComponent } from './app.component';
 import { AlbumsComponent } from './albums/albums.component';
 import { AlbumDetailsComponent } from './album-details/album-details.component';
 import { SearchComponent } from './search/search.component';
+import { LoginComponent } from './login/login.component';
+import { AlbumDescriptionComponent } from './album-description/album-description.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlbumsComponent,
     AlbumDetailsComponent,
-    SearchComponent
+    SearchComponent,
+    LoginComponent,
+    AlbumDescriptionComponent
   ],
   imports: [
     BrowserModule,
