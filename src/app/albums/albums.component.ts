@@ -32,8 +32,8 @@ export class AlbumsComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSelect(album: Album, $event) {
-    this.selectedAlbum = album;
+  onSelect(album: Album) {
+    this.selectedAlbum = { ...album};
   }
 
   playParent($event: Album) {

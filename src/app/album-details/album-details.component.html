@@ -1,10 +1,12 @@
-<div class="card" *ngIf="album">
+<div class="card" *ngIf="hideAlbum==false">
   <img *ngIf="album.url" class="card-img-top" src="{{album.url}}" alt="Group Music">
   <div class="card-body">
     <h5 class="card-title">{{ album.title }}</h5>
     <p class="card-text">{{ album.name }}</p>
-    <a href="#" class="btn btn-danger" >Hide album</a>
-    <button  class="btn btn-primary" (click)="play(album)">Play >> </button>
+    <button  class="btn btn-primary" (click)="play(album)">Play Album >> </button>
+    <p class="btn_hide">
+      <button class="btn btn-warning" (click)="hide()">Hide Album</button>
+    </p>
   </div>
   <ul class="list-group">
     <li class="list-group-item active">Cras justo odio</li>

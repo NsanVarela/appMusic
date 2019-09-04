@@ -21,4 +21,8 @@ export class AlbumService {
   getAlbumList(id: string): List {
     return this.albumLists.find(list => list.id === id);
   }
+
+  initStatus(): void {
+    this.albums = this.albums.map(album => { album.status = `off` ; return album ; });
+  }
 }
