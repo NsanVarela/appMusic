@@ -12,7 +12,11 @@ export class AlbumService {
 
   constructor() { }
 
-  getAlbums(): Album[] { return this.albums; }
+  getAlbums(order = (a, b) => b.duration - a.duration): Album[] {
+    return this.albums.sort(
+      (a, b) => b.duration - a.duration
+    );
+  }
 
   getAlbum(id: string): Album {
     return this.albums.find(album => album.id === id);
