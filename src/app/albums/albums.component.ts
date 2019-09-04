@@ -45,9 +45,8 @@ export class AlbumsComponent implements OnInit {
   onSelect(album: Album) {
     this.selectedAlbum = { ...album};
     const id = this.selectedAlbum.id;
-    console.log('id', id)
     const albumList = this.albumS.getAlbumList(id);
-    console.log('albumList', albumList)
+    console.log('albumList', albumList);
   }
 
   playParent($event: Album) {
