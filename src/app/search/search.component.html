@@ -1,0 +1,16 @@
+<form class="form-inline my-2 my-lg-0" (ngSubmit)="onSubmit(formSearch)" #formSearch="ngForm" >
+  <p>(*)Minimum 4 caractères
+    <input
+      [(ngModel)]="word"
+      (ngModelChange)="onChangeEmit($event)"
+      required minlength="4" name="word" class="form-control mr-sm-2" type="search"
+      placeholder="Search">
+  </p>
+  <p>
+    <button
+      [disabled]="formSearch.invalid"
+      class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit">
+      Search
+    </button>
+  </p>
+</form>

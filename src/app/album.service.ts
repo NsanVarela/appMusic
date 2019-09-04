@@ -29,4 +29,18 @@ export class AlbumService {
   initStatus(): void {
     this.albums = this.albums.map(album => { album.status = `off` ; return album ; });
   }
+
+  count() {
+    return this.albums.length;
+  }
+
+  paginate(start: number, end: number): Album[] {
+    return this.albums.slice(start, end);
+  }
+
+  search(word: string): Album[] {
+    return this.albums.filter(album => album.title.includes(word) );
+  }
+
+
 }

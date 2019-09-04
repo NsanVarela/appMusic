@@ -16,17 +16,30 @@ export class AlbumsComponent implements OnInit {
   selectedAlbum: Album;
   title: string;
   albumId: string;
+  searchAlbum: Album[];
+  isSearch : boolean = false;
+  albumPerPage : number = 3;
 
   constructor(private albumS: AlbumService) {
 
     // tester ici les méthodes demandées
     this.albumId = `2`;
+
     this.albumS.getAlbums();
-    console.log(this.albumS.getAlbums());
+    // console.log(`Tous les albums`, this.albumS.getAlbums());
+
     this.albumS.getAlbum(this.albumId);
-    console.log(this.albumS.getAlbum(this.albumId));
+    // console.log(`Album par Id`, this.albumS.getAlbum(this.albumId));
+
     this.albumS.getAlbumList(this.albumId);
-    console.log(this.albumS.getAlbumList(this.albumId));
+    // console.log(`Liste de l'album par Id`, this.albumS.getAlbumList(this.albumId));
+
+    this.albumS.count();
+    // console.log(`nbre d'albums`, this.albumS.count());
+
+    this.albumS.paginate(1, 3);
+    // console.log(`pagination 0 à 3`, this.albumS.paginate(0, 3));
+
   }
 
   ngOnInit() {
@@ -48,6 +61,23 @@ export class AlbumsComponent implements OnInit {
     });
   }
 
+  searchParent($event: Album[]) {
+    this.albums = $event;
+    this.isSearch = true;
+  }
 
+  // reload propre à ce component
+  reload(){
+    this.albums = this.albumS.paginate(0, this.albumPerPage);
+    this.isSearch = false;
+  }
+
+  // reload déclenché à partir d'un événement de l'enfant
+  relaodParent($event: boolean) {
+    this.isSearch = false; // propre à ce component bouton rouge c'est autre chose (...)
+
+    // remettre tous les albums
+    this.albums = this.albumS.paginate(0, this.albumPerPage);
+  }
 
 }

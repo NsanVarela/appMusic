@@ -1,11 +1,18 @@
 <div class="row content">
 
   <div class="col-sm-4 video">
-      <app-album-details
-        [album]="selectedAlbum"
-        [title]="title"
-        (onPlay)="playParent($event)">
-      </app-album-details>
+
+    <app-album-details
+      [album]="selectedAlbum"
+      [title]="title"
+      (onPlay)="playParent($event)">
+    </app-album-details>
+
+    <app-search
+      (searchAlbums)="searchParent($event)"
+      (reload)="relaodParent($event)" >
+    </app-search>
+
   </div><!-- .video -->
   <div class="col-sm-8 music">
     <nav aria-label="Page navigation example">
@@ -27,7 +34,10 @@
           </li>
       </ul>
     </nav><!-- .pagination -->
-    <button type="button" class="btn btn-lg btn-danger">You are in an anonymous mode.</button>
+    <button type="button" class="btn btn-sm btn-outline-danger">You are in an anonymous mode.</button>
+
+    <!-- <button *ngIf="isSearch" type="button" class="btn btn-lg btn-danger">Résultat de la recherche...</button> -->
+    <button *ngIf="isSearch" (click)="reload()" type="button" class="btn btn-sm btn-outline-dark">Ré-affichez tous les albums.</button>
 
     <div class="card" *ngFor="let album of albums; let index = index;">
       <div  class="card-header">
@@ -54,7 +64,7 @@
           <small>{{ album.duration }} min</small>
         </ng-template>
 
-        <button (click)="onSelect(album, $event)" class="btn btn-dark">Details</button>
+        <button (click)="onSelect(album, $event)" class="btn btn-sm btn-dark">Details</button>
       </div>
     </div>
 
