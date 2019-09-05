@@ -17,7 +17,7 @@
         c'est d'ailleur prévu pour ça
         pipe shuffle(data) dans le template data | shuffle
     -->
-    {{ [1,2,3,5] | shuffle | json }}
+    <!-- {{ [1,2,3,5] | shuffle | json }} -->
     <!-- TODO afficher les morceaux de l'album -->
     <ul *ngIf="songs" class="list-group">
         <li *ngFor="let song of songs" class="list-group-item">{{ song }}</li>

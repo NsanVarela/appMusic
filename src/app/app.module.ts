@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { AlbumsComponent } from './albums/albums.component';
@@ -24,7 +25,8 @@ import { ShufflePipe } from './shuffle.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [ShufflePipe], // le pipe ici pour pouvoir l'utiliser comme un service
   bootstrap: [AppComponent] // composant principal

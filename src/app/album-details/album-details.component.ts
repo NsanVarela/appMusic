@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
+import { ShufflePipe } from '../shuffle.pipe';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+
 import { Album, List } from '../album';
 import { AlbumService } from '../album.service';
 import { ALBUM_LISTS } from '../mock-albums';
@@ -28,11 +31,6 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    // console.log('après montage dans le DOM et quand on passe une valeur parent/enfant @Input');
-    // console.log(this.album); // Au montage cette valeur est null
-
-    // le fait d'envoyer une nouvelle copie à chaque fois permet de réafficher l'album
-    // nottamment celui sur lequel on vient de cliqué
     if (this.album) {
       this.hideAlbum = false; // on rend visible l'album une fois que l'on a passé un album depuis le parent
 
