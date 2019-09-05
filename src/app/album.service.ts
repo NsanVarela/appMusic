@@ -3,6 +3,8 @@ import { ALBUMS, ALBUM_LISTS } from './mock-albums';
 import { Album, List } from './album';
 import { ShufflePipe } from './shuffle.pipe';
 
+// type de la fonction d'ordre permet de créer un type function
+type Order = (a: Album, b: Album) => number;
 @Injectable({
   providedIn: 'root'
 })
@@ -10,6 +12,9 @@ export class AlbumService {
 
   albums: Album[] = ALBUMS;
   albumLists = ALBUM_LISTS;
+
+  // factoriser l'ordre pour le service
+  defaultOrder: Order = (a, b) => a.duration - b.duration;
 
   constructor(private shuffleData: ShufflePipe) { }
 
@@ -35,8 +40,9 @@ export class AlbumService {
     return this.albums.length;
   }
 
-  paginate(start: number, end: number): Album[] {
-    return this.albums.slice(start, end);
+  paginate(start: number, end: number, order: Order = this.defaultOrder): Album[] {
+
+    return this.albums.sort(order).slice(start, end);
   }
 
   search(word: string): Album[] {

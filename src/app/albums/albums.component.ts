@@ -3,6 +3,7 @@ import { Album } from '../album'; // def du type
 import { ALBUMS } from '../mock-albums'; // données d'exemple
 import { AlbumService } from '../album.service';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-albums',
@@ -12,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class AlbumsComponent implements OnInit {
 
   // One way property binding
+  private albumPerPage: number = environment.albumPerPage;
   titlePage = `Page principale Albums Music`;
   albums: Album[] = ALBUMS;
   selectedAlbum: Album;
@@ -19,8 +21,8 @@ export class AlbumsComponent implements OnInit {
   albumId: string;
   searchAlbum: Album[];
   isSearch = false;
-  albumPerPage = 3;
-  
+  page: any;
+
 
   constructor(private route: ActivatedRoute , private albumS: AlbumService) {
 
@@ -68,7 +70,7 @@ export class AlbumsComponent implements OnInit {
   }
 
   // reload propre à ce component
-  reload(){
+  reload() {
     this.albums = this.albumS.paginate(0, this.albumPerPage);
     this.isSearch = false;
   }
@@ -78,6 +80,12 @@ export class AlbumsComponent implements OnInit {
     this.isSearch = false;
     // remettre tous les albums
     this.albums = this.albumS.paginate(0, this.albumPerPage);
+  }
+
+  paginateParent($event: { start: number, end: number }) {
+    // affectation de variable en mode spread
+    const { start, end } = $event;
+    this.albums = this.albumS.paginate(start, end);
   }
 
 }

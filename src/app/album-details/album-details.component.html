@@ -4,13 +4,13 @@
     <h5 class="card-title">{{ album.title }}</h5>
     <p class="card-text">{{ album.name }}</p>
     <p>
-      <button  class="btn btn-sm btn-outline-success" (click)="play(album)">Play Album</button>
+      <button [@openClose]="isOpen ? 'open' : 'closed'" class="btn btn-sm btn-outline-primary btn-shuffle" (click)="shuffle()">Shuffle songs</button>
     </p>
     <p>
-      <button  class="btn btn-sm btn-outline-primary" (click)="shuffle()">Shuffle songs</button>
+      <button  class="btn btn-sm btn-outline-success btn-play" (click)="play(album)">Play Album</button>
     </p>
     <p class="btn_hide">
-      <button class="btn btn-sm btn-outline-warning" (click)="hide()">Hide Album</button>
+      <button class="btn btn-sm btn-outline-warning btn-hide" (click)="hide()">Hide Album</button>
     </p>
   </div>
   <!-- vous pouvez également utiliser le pipe dans le template

@@ -11,6 +11,7 @@ import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './login/login.component';
 import { AlbumDescriptionComponent } from './album-description/album-description.component';
 import { ShufflePipe } from './shuffle.pipe';
+import { PaginateComponent } from './paginate/paginate.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ShufflePipe } from './shuffle.pipe';
     SearchComponent,
     LoginComponent,
     AlbumDescriptionComponent,
-    ShufflePipe
+    ShufflePipe,
+    PaginateComponent
   ],
   imports: [
     BrowserModule,

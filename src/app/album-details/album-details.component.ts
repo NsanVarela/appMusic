@@ -9,7 +9,26 @@ import { ALBUM_LISTS } from '../mock-albums';
 @Component({
   selector: 'app-album-details',
   templateUrl: './album-details.component.html',
-  styleUrls: ['./album-details.component.scss']
+  styleUrls: ['./album-details.component.scss'],
+  animations: [
+    trigger('openClose', [
+      // définir l'état open de l'élément HTML
+      state('open', style({
+        height: '40px',
+        opacity: 1,
+        backgroundColor: '#FA8072'
+        })),
+      // définir l'état close de l'élément HTML
+      state('close', style({
+        height: '100px',
+        opacity: 0.25,
+        backgroundColor: '#000000'
+        })),
+      transition('open <=> closed', [
+        animate('0.3s')
+      ])
+    ]),
+  ],
 })
 export class AlbumDetailsComponent implements OnInit, OnChanges {
 
@@ -23,6 +42,8 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
   songs: Array<string> = [];
   hideAlbum = true;
   selectedAlbum: Album;
+
+  isOpen = false;
 
   constructor(private albumS: AlbumService) {
   }
@@ -49,7 +70,9 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
   shuffle() {
     if (this.songs) {
       this.songs = this.albumS.shuffle(this.songs);
+      this.isOpen = !this.isOpen;
     }
   }
+
 
 }
