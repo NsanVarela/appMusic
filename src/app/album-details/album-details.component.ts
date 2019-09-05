@@ -19,6 +19,7 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
   albumLists: List[] = ALBUM_LISTS;
   songs: Array<string> = [];
   hideAlbum = true;
+  selectedAlbum: Album;
 
   constructor(private albumS: AlbumService) {
   }
@@ -27,9 +28,16 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    // console.log(this.album);
+    // console.log('après montage dans le DOM et quand on passe une valeur parent/enfant @Input');
+    // console.log(this.album); // Au montage cette valeur est null
+
+    // le fait d'envoyer une nouvelle copie à chaque fois permet de réafficher l'album
+    // nottamment celui sur lequel on vient de cliqué
     if (this.album) {
-      this.hideAlbum = false;
+      this.hideAlbum = false; // on rend visible l'album une fois que l'on a passé un album depuis le parent
+
+      const list: List = this.albumS.getAlbumList(this.album.id);
+      this.songs = list ? list.list : [];
     }
   }
 
@@ -39,5 +47,11 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
   }
 
   hide() { this.hideAlbum = true; this.albumS.initStatus(); }
+
+  shuffle() {
+    if (this.songs) {
+      this.songs = this.albumS.shuffle(this.songs);
+    }
+  }
 
 }

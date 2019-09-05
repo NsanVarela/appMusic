@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Album } from '../album'; // def du type
 import { ALBUMS } from '../mock-albums'; // données d'exemple
 import { AlbumService } from '../album.service';
@@ -20,8 +20,9 @@ export class AlbumsComponent implements OnInit {
   searchAlbum: Album[];
   isSearch = false;
   albumPerPage = 3;
+  
 
-  constructor(private route: ActivatedRoute ,private albumS: AlbumService) {
+  constructor(private route: ActivatedRoute , private albumS: AlbumService) {
 
     // tester ici les méthodes demandées
     this.albumId = `2`;

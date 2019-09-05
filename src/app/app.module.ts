@@ -9,6 +9,7 @@ import { AlbumDetailsComponent } from './album-details/album-details.component';
 import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './login/login.component';
 import { AlbumDescriptionComponent } from './album-description/album-description.component';
+import { ShufflePipe } from './shuffle.pipe';
 
 @NgModule({
   declarations: [
@@ -17,14 +18,15 @@ import { AlbumDescriptionComponent } from './album-description/album-description
     AlbumDetailsComponent,
     SearchComponent,
     LoginComponent,
-    AlbumDescriptionComponent
+    AlbumDescriptionComponent,
+    ShufflePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ShufflePipe], // le pipe ici pour pouvoir l'utiliser comme un service
   bootstrap: [AppComponent] // composant principal
 })
 export class AppModule { }

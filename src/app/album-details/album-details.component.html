@@ -3,13 +3,24 @@
   <div class="card-body">
     <h5 class="card-title">{{ album.title }}</h5>
     <p class="card-text">{{ album.name }}</p>
-    <button  class="btn btn-primary" (click)="play(album)">Play Album >> </button>
+    <p>
+      <button  class="btn btn-sm btn-outline-success" (click)="play(album)">Play Album</button>
+    </p>
+    <p>
+      <button  class="btn btn-sm btn-outline-primary" (click)="shuffle()">Shuffle songs</button>
+    </p>
     <p class="btn_hide">
-      <button class="btn btn-warning" (click)="hide()">Hide Album</button>
+      <button class="btn btn-sm btn-outline-warning" (click)="hide()">Hide Album</button>
     </p>
   </div>
-  <ul class="list-group">
-    <li class="list-group-item active">Cras justo odio</li>
-  </ul>
+  <!-- vous pouvez également utiliser le pipe dans le template
+        c'est d'ailleur prévu pour ça
+        pipe shuffle(data) dans le template data | shuffle
+    -->
+    {{ [1,2,3,5] | shuffle | json }}
+    <!-- TODO afficher les morceaux de l'album -->
+    <ul *ngIf="songs" class="list-group">
+        <li *ngFor="let song of songs" class="list-group-item">{{ song }}</li>
+    </ul>
 </div>
 

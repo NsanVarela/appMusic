@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ALBUMS, ALBUM_LISTS } from './mock-albums';
 import { Album, List } from './album';
+import { ShufflePipe } from './shuffle.pipe';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class AlbumService {
   albums: Album[] = ALBUMS;
   albumLists = ALBUM_LISTS;
 
-  constructor() { }
+  constructor(private shuffleData: ShufflePipe) { }
 
   getAlbums(order = (a, b) => b.duration - a.duration): Album[] {
     return this.albums.sort(
@@ -42,5 +43,8 @@ export class AlbumService {
     return this.albums.filter(album => album.title.includes(word) );
   }
 
+  shuffle(data: any[]) {
+    return this.shuffleData.transform(data);
+  }
 
 }

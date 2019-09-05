@@ -1,4 +1,5 @@
-<form #formLogin="ngForm">
+<form (ngSubmit)="onSubmit(formLogin)" #formLogin="ngForm">
+  <p *ngIf="messageError">{{ messageError }}</p>
   <div class="form-group">
     <label for="email">Email address</label>
     <input name="email" ngModel email required type="email" class="form-control" id="email" placeholder="Enter email">
@@ -7,5 +8,5 @@
     <label for="password">Password</label>
     <input name="password" ngModel required type="password" class="form-control" id="password" placeholder="Password">
   </div>
-  <button class="btn btn-primary">Se connecter</button>
+  <button class="btn btn-primary" [disabled]="!formLogin.valid">Se connecter</button>
 </form>
