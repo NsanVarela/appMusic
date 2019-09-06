@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+
 import { ALBUMS, ALBUM_LISTS } from './mock-albums';
 import { Album, List } from './album';
 import { ShufflePipe } from './shuffle.pipe';
+
+import { Subject } from 'rxjs';
 
 // type de la fonction d'ordre permet de créer un type function
 type Order = (a: Album, b: Album) => number;
@@ -10,8 +13,11 @@ type Order = (a: Album, b: Album) => number;
 })
 export class AlbumService {
 
-  albums: Album[] = ALBUMS;
-  albumLists = ALBUM_LISTS;
+  private albums: Album[] = ALBUMS;
+  private albumLists = ALBUM_LISTS;
+
+  // subject pour la pagination informer les autres components
+  sendCurrentNumberPage = new Subject<number>();
 
   // factoriser l'ordre pour le service
   defaultOrder: Order = (a, b) => a.duration - b.duration;
@@ -51,6 +57,10 @@ export class AlbumService {
 
   shuffle(data: any[]) {
     return this.shuffleData.transform(data);
+  }
+
+  currentPage(page: number) {
+    return this.sendCurrentNumberPage.next(page);
   }
 
 }

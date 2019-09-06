@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { AlbumService } from '../album.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { AlbumService } from '../album.service';
   templateUrl: './paginate.component.html',
   styleUrls: ['./paginate.component.scss']
 })
-export class PaginateComponent implements OnInit {
+export class PaginateComponent implements OnInit, OnDestroy {
   @Output() paginate: EventEmitter<{ start: number, end: number }> = new EventEmitter();
 
   perPage: number = 3; // nombre d'albums par page
@@ -15,8 +15,15 @@ export class PaginateComponent implements OnInit {
   currentPage: number; // page courante
   numberPages: number = 0; // nombre de page(s)
 
-  constructor(private aS: AlbumService) {
-    this.total = this.aS.count();
+  constructor(private albumS: AlbumService) {
+    this.total = this.albumS.count();
+
+    // Souscription à l'observable
+    // Ecoute, et l'observer reçoit l'info
+    this.albumS.sendCurrentNumberPage.subscribe(pageNumber => {
+      // console.log(`pageNumber :`, pageNumber);
+      this.currentPage = pageNumber;
+    });
   }
 
   ngOnInit() {
@@ -36,20 +43,27 @@ export class PaginateComponent implements OnInit {
   selectedPage(page: number) {
     this.currentPage = page;
 
-    let start = (page - 1) * this.perPage;
-    let end = start + this.perPage;
+    const start = (page - 1) * this.perPage;
+    const end = start + this.perPage;
 
-    this.paginate.emit({ start: start, end: end });
+    this.paginate.emit({ start, end });
+
+    // Notifie aux observers le numéro de page
+    this.albumS.currentPage(page);
   }
 
   next() {
-    this.currentPage = (this.currentPage == this.numberPages) ? 1 : this.currentPage + 1;
+    this.currentPage = (this.currentPage === this.numberPages) ? 1 : this.currentPage + 1;
     this.selectedPage(this.currentPage);
   }
 
   previous() {
-    this.currentPage = (this.currentPage == 1) ? this.numberPages : this.currentPage - 1;
+    this.currentPage = (this.currentPage === 1) ? this.numberPages : this.currentPage - 1;
     this.selectedPage(this.currentPage);
+  }
+
+  ngOnDestroy() {
+    // console.log(`destroy...`);
   }
 
 }
