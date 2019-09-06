@@ -62,6 +62,7 @@ export class PaginateComponent implements OnInit, OnDestroy {
     this.selectedPage(this.currentPage);
   }
 
+  // Le component est détruit au changement de page
   ngOnDestroy() {
     // console.log(`destroy...`);
   }

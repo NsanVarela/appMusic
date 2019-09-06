@@ -17,29 +17,27 @@ export class AlbumsComponent implements OnInit {
   titlePage = `Page principale Albums Music`;
   albums: Album[] = ALBUMS;
   selectedAlbum: Album;
+  selected: Album;
   title: string;
   albumId: string;
   searchAlbum: Album[];
   isSearch = false;
   page: any;
 
+  albumNotation: Album;
 
   constructor(private route: ActivatedRoute , private albumS: AlbumService) {
 
     // tester ici les méthodes demandées
-    this.albumId = `2`;
+    // this.albumId = `1`;
 
-    this.albumS.getAlbums();
-    // console.log(`Tous les albums`, this.albumS.getAlbums());
+    // this.albumS.getAlbums();
     this.albumS.getAlbum(this.albumId);
-    // console.log(`Album par Id`, this.albumS.getAlbum(this.albumId));
-    this.albumS.getAlbumList(this.albumId);
-    // console.log(`Liste de l'album par Id`, this.albumS.getAlbumList(this.albumId));
-    this.albumS.count();
-    // console.log(`nbre d'albums`, this.albumS.count());
-    this.albumS.paginate(1, 3);
-    // console.log(`pagination 0 à 3`, this.albumS.paginate(0, 3));
-
+    // this.albumS.getAlbumList(this.albumId);
+    // this.albumS.count();
+    // this.albumS.paginate(1, 3);
+    // this.albumS.getNotation();
+    // this.albumS.getAlbum(this.albumId).note;
   }
 
   ngOnInit() {
@@ -50,6 +48,15 @@ export class AlbumsComponent implements OnInit {
     const id = this.selectedAlbum.id;
     const albumList = this.albumS.getAlbumList(id);
     console.log('albumList', albumList);
+  }
+
+  onChoose(album: Album) {
+    console.log('album :', album);
+    this.selected = { ...album};
+    const id = this.selected.id;
+    this.albumNotation = this.albumS.getAlbum(id);
+    console.log('albumNotation :', this.albumNotation);
+    return this.albumNotation;
   }
 
   playParent($event: Album) {
@@ -87,5 +94,9 @@ export class AlbumsComponent implements OnInit {
     const { start, end } = $event;
     this.albums = this.albumS.paginate(start, end);
   }
+
+
+
+
 
 }

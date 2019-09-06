@@ -2,6 +2,10 @@
 
   <div class="col-sm-4 video">
 
+    <app-stat
+    [album]="albumNotation">
+    </app-stat>
+
     <app-album-details
       [album]="selectedAlbum"
       [title]="title"
@@ -18,8 +22,8 @@
   <div class="col-sm-8 music">
 
     <app-paginate
-      (paginate)="paginateParent($event)"
-    ></app-paginate>
+      (paginate)="paginateParent($event)">
+    </app-paginate>
 
     <button type="button" class="btn btn-sm btn-outline-danger">
       You are in an anonymous mode.
@@ -69,6 +73,9 @@
 
         <button (click)="onSelect(album, $event)" class="btn btn-sm btn-dark">
           Details
+        </button>
+        <button (click)="onChoose(album, $event)" routerLink="/stat" class="btn btn-sm btn-dark">
+          Notes
         </button>
       </div>
     </div>

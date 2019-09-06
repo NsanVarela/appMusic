@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AlbumsComponent } from './albums/albums.component';
 import { LoginComponent } from './login/login.component';
 import { AlbumDescriptionComponent } from './album-description/album-description.component';
-
+import { StatComponent } from './stat/stat.component';
 
 const albumRoutes: Routes = [
   {
@@ -22,6 +22,10 @@ const albumRoutes: Routes = [
   {
     path: 'album/:id',
     component: AlbumDescriptionComponent
+  },
+  {
+    path: 'stat',
+    component: StatComponent
   },
 ];
 

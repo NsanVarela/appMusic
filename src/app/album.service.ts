@@ -15,6 +15,7 @@ export class AlbumService {
 
   private albums: Album[] = ALBUMS;
   private albumLists = ALBUM_LISTS;
+  private notes: Array<number>;
 
   // subject pour la pagination informer les autres components
   sendCurrentNumberPage = new Subject<number>();

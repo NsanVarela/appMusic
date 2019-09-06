@@ -34,7 +34,6 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
 
   @Input() album: Album;
   @Input() title: string;
-
   // tslint:disable-next-line: no-output-on-prefix
   @Output() onPlay: EventEmitter<Album> = new EventEmitter();
 
@@ -42,7 +41,6 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
   songs: Array<string> = [];
   hideAlbum = true;
   selectedAlbum: Album;
-
   isOpen = false;
 
   constructor(private albumS: AlbumService) {

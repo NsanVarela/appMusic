@@ -6,6 +6,7 @@ export class Album {
   description: string;
   duration: number;
   status: string;
+  note: Array<number>;
   url?: string;
   tags?: Array<string>;
   like?: string;
