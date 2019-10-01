@@ -16,3 +16,12 @@ export class List {
   id: string;
   list: Array<string>;
 }
+
+export class StatusPlayer {
+  albumId: string;
+  song: string;
+  playing: boolean = false;
+  current: number;
+  total: number;
+  ratio: number = 0;
+}

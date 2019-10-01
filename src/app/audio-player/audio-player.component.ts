@@ -10,7 +10,7 @@ export class AudioPlayerComponent implements OnInit {
 
   id: string = null;
   song: string = null;
-  playing: boolean = false;
+  playing = false;
   current = 1;
   total: number = null;
   ratio = 0;
@@ -18,12 +18,10 @@ export class AudioPlayerComponent implements OnInit {
   constructor(private albumS: AlbumService) {
     this.albumS.statusPlayer.subscribe(status => {
       this.id = status.id;
-      // this.song = status.song;
-      // this.playing = status.playing;
       this.current = status.current;
       this.total = status.total;
       this.ratio = status.ratio;
-    })
+    });
   }
 
   ngOnInit() { }

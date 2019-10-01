@@ -33,6 +33,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class AlbumDetailsComponent implements OnInit, OnChanges {
 
   @Input() album: Album;
+  // tslint:disable-next-line: no-output-on-prefix
   @Output() onPlay: EventEmitter<Album> = new EventEmitter();
 
   hideAlbum = true;
@@ -40,7 +41,7 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
   isOpen = true;
   id: string = null;
   current: number = null;
-  isActive: boolean = true;
+  isActive = true;
 
   constructor( private albumS: AlbumService ) { // En premier, avant montage dans le dom'
     this.albumS.statusPlayer.subscribe( status => {
