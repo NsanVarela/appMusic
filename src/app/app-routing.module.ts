@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { AlbumsComponent } from './albums/albums.component';
-import { LoginComponent } from './login/login.component';
 import { AlbumDescriptionComponent } from './album-description/album-description.component';
+import { LoginComponent } from './login/login.component';
 import { StatComponent } from './stat/stat.component';
 
-const albumRoutes: Routes = [
+const albumsRoutes: Routes = [
   {
-    path : 'albums',
-    component : AlbumsComponent
+    path: 'albums',
+    component: AlbumsComponent,
+    data: {state: 'home' }
   },
   {
     path: '',
@@ -17,20 +19,23 @@ const albumRoutes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    data: {state: 'login' }
   },
   {
     path: 'album/:id',
-    component: AlbumDescriptionComponent
+    component: AlbumDescriptionComponent,
+    data: {state: 'description' }
   },
   {
     path: 'stat',
-    component: StatComponent
-  },
+    component: StatComponent,
+    data: {state: 'stat' }
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(albumRoutes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(albumsRoutes)], // routes principales correspondent aux routes définies pour AppModule
+  exports: [RouterModule] // il faut exporter votre module de routing pour qu'il soit accessible dans AppModule
 })
 export class AppRoutingModule { }

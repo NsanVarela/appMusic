@@ -52,7 +52,7 @@ export const ALBUMS: Album[] = [
     description: `Exercitation sunt qui sint eiusmod velit est dolor duis commodo
       nulla cillum cupidatat dolor voluptate. Amet aute duis deserunt ad quis eiusmod est.
       In veniam veniam mollit velit qui amet quis. Et do sint ipsum nisi velit culpa laborum.`,
-    duration: 360,
+    duration: 840,
     url: `http://placehold.it/32x32`,
     tags: [
       `elit`,
@@ -74,7 +74,7 @@ export const ALBUMS: Album[] = [
     description: `Cillum proident commodo do non esse cillum incididunt officia qui occaecat.
       Excepteur id voluptate esse tempor aliqua voluptate in labore anim incididunt ea nostrud
       nisi. Proident adipisicing adipisicing enim adipisicing nisi elit irure.`,
-    duration: 840,
+    duration: 360,
     url: `http://placehold.it/32x32`,
     like: `Rather`,
     tags: [
@@ -114,7 +114,7 @@ export const ALBUMS: Album[] = [
     nostrud. Ad mollit Lorem consectetur minim consequat est eiusmod deserunt pariatur est ullamco.
     Veniam anim veniam Lorem excepteur irure. Esse adipisicing nulla in incididunt. Consectetur fugiat
     exercitation aliquip excepteur ipsum ullamco ullamco magna commodo.`,
-    duration: 360,
+    duration: 840,
     url: `http://placehold.it/32x32`,
     like: `Much`,
     tags: [
@@ -138,7 +138,7 @@ export const ALBUMS: Album[] = [
     nostrud. Ad mollit Lorem consectetur minim consequat est eiusmod deserunt pariatur est ullamco.
     Veniam anim veniam Lorem excepteur irure. Esse adipisicing nulla in incididunt. Consectetur fugiat
     exercitation aliquip excepteur ipsum ullamco ullamco magna commodo.`,
-    duration: 240,
+    duration: 360,
     url: `http://placehold.it/32x32`,
     like: `Much`,
     tags: [
@@ -186,7 +186,7 @@ export const ALBUMS: Album[] = [
         nostrud. Ad mollit Lorem consectetur minim consequat est eiusmod deserunt pariatur est ullamco.
         Veniam anim veniam Lorem excepteur irure. Esse adipisicing nulla in incididunt. Consectetur fugiat
         exercitation aliquip excepteur ipsum ullamco ullamco magna commodo.`,
-      duration: 240,
+      duration: 0,
       url: `http://placehold.it/32x32`,
       like: `Much`,
       tags: [
@@ -211,7 +211,7 @@ export const ALBUMS: Album[] = [
         pariatur est ullamco. Veniam anim veniam Lorem excepteur irure. Esse adipisicing nulla
         in incididunt. Consectetur fugiat exercitation aliquip excepteur ipsum ullamco ullamco
         magna commodo.`,
-      duration: 240,
+      duration: 0,
       url: `http://placehold.it/32x32`,
       like: `Much`,
       tags: [

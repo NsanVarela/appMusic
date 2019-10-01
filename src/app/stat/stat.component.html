@@ -1,17 +1,24 @@
-
+<app-paginate (paginate)="paginateParent($event)" [perPage]="perPage"></app-paginate>
+<span>(*) ordre par rapport à la moyenne</span>
+<p><button (click)="decrease()" type="button" class="btn btn-info">Ordonné par ordre croissant (*)</button></p>
+<p><button (click)="increase()" type="button" class="btn btn-info">Ordonné par ordre décroissant (*)</button></p>
 <table class="table table-dark">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Album</th>
-      <th scope="col">Note</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>{{album.title}}</td>
-      <td>{{album.note}}</td>
-    </tr>
-  </tbody>
+    <thead>
+        <tr>
+            <th scope="col">ref</th>
+            <th scope="col">Title</th>
+            <th scope="col">Song(s)</th>
+            <th scope="col">Average</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let album of albums">
+            <td>{{ album.ref }}</td>
+            <td>{{ album.name }}</td>
+            <th >{{ numberSongs(album.id) }} </th>
+            <!-- Pipe que l'on a définit pour calculer la moyenne -->
+            <td>{{ album.note | avg }}</td>
+        </tr>
+    </tbody>
 </table>
+<app-paginate (paginate)="paginateParent($event)" [perPage]="perPage"  ></app-paginate>

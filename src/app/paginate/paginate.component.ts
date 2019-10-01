@@ -1,5 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { AlbumService } from '../album.service';
+
+import { Subscription, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-paginate',
@@ -8,27 +10,33 @@ import { AlbumService } from '../album.service';
 })
 export class PaginateComponent implements OnInit, OnDestroy {
   @Output() paginate: EventEmitter<{ start: number, end: number }> = new EventEmitter();
+  @Input() perPage: number; // dans le selecteur du paginate depuis le parent
 
-  perPage: number = 3; // nombre d'albums par page
   pages: number[] = []; // numéro des pages 1, 2, 3, ...
   total: number = 0; // total des albums
   currentPage: number; // page courante
-  numberPages: number = 0; // nombre de page(s)
+  numberPages: number = 0;
 
-  constructor(private albumS: AlbumService) {
-    this.total = this.albumS.count();
+  constructor(private aS: AlbumService) {
+    this.total = this.aS.count();
+    console.log(this.total);
 
-    // Souscription à l'observable
-    // Ecoute, et l'observer reçoit l'info
-    this.albumS.sendCurrentNumberPage.subscribe(pageNumber => {
-      // console.log(`pageNumber :`, pageNumber);
-      this.currentPage = pageNumber;
-    });
+    // this.total = this.numberAlbums;
   }
 
   ngOnInit() {
     // initialiser la création des numéros de page
     this.init();
+
+    // il faut souscrire à l'observable
+    // écoute et l'observer reçoit l'info
+    if ( this.aS.sendCurrentNumberPage.closed ) {
+      this.aS.initSubject();
+    }
+
+    this.aS.sendCurrentNumberPage.subscribe(
+      page => { console.log(page); this.currentPage = page; }
+    );
   }
 
   init(page: number = 1) {
@@ -48,8 +56,8 @@ export class PaginateComponent implements OnInit, OnDestroy {
 
     this.paginate.emit({ start, end });
 
-    // Notifie aux observers le numéro de page
-    this.albumS.currentPage(page);
+    // notifier aux observers le numéro de la page
+    this.aS.currentPage(page);
   }
 
   next() {
@@ -62,12 +70,12 @@ export class PaginateComponent implements OnInit, OnDestroy {
     this.selectedPage(this.currentPage);
   }
 
-  // Le component est détruit au changement de page
+  // component est retiré du DOM
   ngOnDestroy() {
-    // console.log(`destroy...`);
+    console.log('destroy...');
+
+    // une fois le component démonté on se désinscrit au Subject
+    this.aS.sendCurrentNumberPage.unsubscribe();
   }
 
 }
-
-
-

@@ -1,88 +1,47 @@
+<app-search
+    (searchAlbums)="searchParent($event)"
+    (reload)="relaodParent($event)"
+></app-search>
 <div class="row content">
-
-  <div class="col-sm-4 video">
-
-    <app-stat
-    [album]="albumNotation">
-    </app-stat>
-
-    <app-album-details
-      [album]="selectedAlbum"
-      [title]="title"
-      (onPlay)="playParent($event)">
-    </app-album-details>
-
-    <app-search
-      (searchAlbums)="searchParent($event)"
-      (reload)="relaodParent($event)" >
-    </app-search>
-
-  </div>
-
-  <div class="col-sm-8 music">
-
-    <app-paginate
-      (paginate)="paginateParent($event)">
-    </app-paginate>
-
-    <button type="button" class="btn btn-sm btn-outline-danger">
-      You are in an anonymous mode.
-    </button>
-
-    <button *ngIf="isSearch" (click)="reload()" type="button" class="btn btn-sm btn-outline-dark">Ré-affichez tous les albums.</button>
-
-    <div class="card" *ngFor="let album of albums; let index = index;">
-      <div  class="card-header">
-        {{ index + 1 }} - {{ album.ref }}
-        <span *ngIf="album.status === 'on'">
-          [play]
-        </span>
-      </div>
-      <div class="card-body">
-        <h5 [ngClass]="{'card-title': true, 'card-title-search': isSearch}">
-            <a class="text-info" routerLink="/album/{{album.id}}">
-              {{ album.title }}
-            </a>
-        </h5>
-        <p class="card-text">
-          {{ album.description }}
-        </p>
-        <ul *ngIf="album.tags" class="list-inline">
-          <li class="list-inline-item" *ngFor="let word of album.tags">
-            <span class="badge badge-info">
-              {{ word }}
-            </span>
-          </li>
-        </ul>
-        <a class="btn btn-outline-dark" href="#" role="button">
-          en
-        </a>
-        <ng-template [ngIf]="album.like">
-          <img class="glyph-icon" src="./assets/svg/si-glyph-heart.svg" />
-          <small>
-            {{ album.like }}
-          </small>
-        </ng-template>
-
-        <ng-template [ngIf]="album.duration">
-          <img class="glyph-icon" src="./assets/svg/si-glyph-timer.svg" />
-          <small>
-            {{ album.duration }} min
-          </small>
-        </ng-template>
-
-        <button (click)="onSelect(album, $event)" class="btn btn-sm btn-dark">
-          Details
-        </button>
-        <button (click)="onChoose(album, $event)" routerLink="/stat" class="btn btn-sm btn-dark">
-          Notes
-        </button>
-      </div>
-    </div>
-
-    <app-paginate
-      (paginate)="paginateParent($event)">
-    </app-paginate>
-  </div>
-
+    <div class="col-sm-4 video">
+        <app-album-details
+            [album]="selectedAlbum"
+            (onPlay)="playParent($event)"
+        ></app-album-details>
+    </div><!-- .video -->
+    <div class="col-sm-8 music">
+        <app-paginate (paginate)="paginateParent($event)" [perPage]="perPage"></app-paginate>
+        <button *ngIf="isSearch" type="button" class="btn btn-lg btn-danger">Résultat de la recherche...</button>
+        <button *ngIf="isSearch" (click)="reload()" type="button" class="btn btn-lg btn-danger">Ré-affichez tous les albums.</button>
+        <!-- Albums -->
+        <div class="card" *ngFor="let album of albums; let index = index">
+            <div class="card-header">
+                {{ index + 1 }} {{ album.ref }} <span *ngIf="album.status == 'on'">[play]</span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    <!-- une uri avec un paramètre dynamique qui est conforme à la politique défini dans le router -->
+                    <a routerLink="/album/{{ album.id }}" >{{album.title}}</a>
+                </h5>
+                <p class="card-text">{{ album.description }}</p>
+                <ul *ngIf="album.tags" class="list-inline">
+                    <li class="list-inline-item" *ngFor="let tag of album.tags">
+                        <span class="badge badge-info">{{ tag }}</span>
+                    </li>
+                </ul>
+                <a class="btn btn-outline-primary" href="#" role="button">fr</a>
+                <a class="btn btn-outline-dark" href="#" role="button">guitar</a>
+                <ng-template [ngIf]="album.like">
+                    <img class="glyph-icon" src="./assets/svg/si-glyph-heart.svg" />
+                    <small>{{ album.like }}</small>
+                </ng-template>
+                <ng-template [ngIf]="album.duration">
+                    <img class="glyph-icon" src="./assets/svg/si-glyph-timer.svg" />
+                    <small>{{ album.duration }} min</small>
+                </ng-template>
+            </div>
+            <button class="btn btn-dark" (click)="onSelect(album)">Details</button>
+        </div><!-- .card -->
+        <app-paginate (paginate)="paginateParent($event)" [perPage]="perPage" ></app-paginate>
+    </div><!-- .music -->
 </div>

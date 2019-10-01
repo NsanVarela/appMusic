@@ -1,10 +1,7 @@
-import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
-import { ShufflePipe } from '../shuffle.pipe';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Album, List } from '../album';
 import { AlbumService } from '../album.service';
-import { ALBUM_LISTS } from '../mock-albums';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-album-details',
@@ -12,65 +9,83 @@ import { ALBUM_LISTS } from '../mock-albums';
   styleUrls: ['./album-details.component.scss'],
   animations: [
     trigger('openClose', [
-      // définir l'état open de l'élément HTML
       state('open', style({
-        height: '40px',
+        height: '60px',
         opacity: 1,
-        backgroundColor: '#FA8072'
-        })),
-      // définir l'état close de l'élément HTML
-      state('close', style({
-        height: '100px',
-        opacity: 0.25,
-        backgroundColor: '#000000'
-        })),
-      transition('open <=> closed', [
-        animate('0.3s')
-      ])
+        backgroundColor: 'yellow',
+        padding: '1px'
+      })),
+      state('closed', style({
+        height: '40px',
+        opacity: 0.5,
+        backgroundColor: 'green',
+        padding: '1px'
+      })),
+      transition('open => closed', [
+        animate('1s')
+      ]),
+      transition('closed => open', [
+        animate('0.5s')
+      ]),
     ]),
   ],
 })
 export class AlbumDetailsComponent implements OnInit, OnChanges {
 
   @Input() album: Album;
-  @Input() title: string;
-  // tslint:disable-next-line: no-output-on-prefix
   @Output() onPlay: EventEmitter<Album> = new EventEmitter();
 
-  albumLists: List[] = ALBUM_LISTS;
-  songs: Array<string> = [];
   hideAlbum = true;
-  selectedAlbum: Album;
-  isOpen = false;
+  songs: string[];
+  isOpen = true;
+  id: string = null;
+  current: number = null;
+  isActive: boolean = true;
 
-  constructor(private albumS: AlbumService) {
+  constructor( private albumS: AlbumService ) { // En premier, avant montage dans le dom'
+    this.albumS.statusPlayer.subscribe( status => {
+      this.id = status.id;
+      this.current = status.current;
+    });
   }
 
-  ngOnInit() {
+  ngOnInit() { // 2/ au montage du template dans le DOM et une fois
   }
 
-  ngOnChanges() {
+  ngOnChanges() { // après montage dans le DOM et quand on passe une valeur parent/enfant @Input'
     if (this.album) {
       this.hideAlbum = false; // on rend visible l'album une fois que l'on a passé un album depuis le parent
-
       const list: List = this.albumS.getAlbumList(this.album.id);
       this.songs = list ? list.list : [];
     }
   }
 
   play(album: Album) {
+    if (this.album) {
+      this.albumS.switchOn(album);
+      this.isActive = false;
+    }
     this.onPlay.emit(album);
-    // console.log('album enfant :', album);
   }
 
-  hide() { this.hideAlbum = true; this.albumS.initStatus(); }
+  stop(album: Album) {
+    this.isActive = true;
+  }
+
+  hide() {
+    this.hideAlbum = true;
+    this.albumS.initStatus();
+  }
 
   shuffle() {
     if (this.songs) {
-      this.songs = this.albumS.shuffle(this.songs);
-      this.isOpen = !this.isOpen;
+      this.songs = this.albumS.shuffle( this.songs );
+      this.toggle();
     }
   }
 
+  toggle() {
+    this.isOpen = !this.isOpen;
+  }
 
 }

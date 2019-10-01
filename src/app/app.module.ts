@@ -13,6 +13,8 @@ import { AlbumDescriptionComponent } from './album-description/album-description
 import { ShufflePipe } from './shuffle.pipe';
 import { PaginateComponent } from './paginate/paginate.component';
 import { StatComponent } from './stat/stat.component';
+import { AvgPipe } from './avg.pipe';
+import { AudioPlayerComponent } from './audio-player/audio-player.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { StatComponent } from './stat/stat.component';
     AlbumDescriptionComponent,
     ShufflePipe,
     PaginateComponent,
-    StatComponent
+    StatComponent,
+    AvgPipe,
+    AudioPlayerComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +36,7 @@ import { StatComponent } from './stat/stat.component';
     FormsModule,
     BrowserAnimationsModule
   ],
-  providers: [ShufflePipe], // le pipe ici pour pouvoir l'utiliser comme un service
+  providers: [ShufflePipe, AvgPipe], // le pipe ici pour pouvoir l'utiliser comme un service
   bootstrap: [AppComponent] // composant principal
 })
 export class AppModule { }

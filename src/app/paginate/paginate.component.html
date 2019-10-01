@@ -1,5 +1,6 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination">
+    <!-- directive d'attribut permet de mettre une classe de manière conditionnelle -->
     <li [ngClass]="{'disabled' : currentPage == 1}" class="page-item">
       <a (click)="previous()" class="page-link">Previous</a>
     </li>

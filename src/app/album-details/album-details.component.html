@@ -1,26 +1,20 @@
 <div class="card" *ngIf="hideAlbum==false">
-  <img *ngIf="album.url" class="card-img-top" src="{{album.url}}" alt="Group Music">
-  <div class="card-body">
-    <h5 class="card-title">{{ album.title }}</h5>
-    <p class="card-text">{{ album.name }}</p>
-    <p>
-      <button [@openClose]="isOpen ? 'open' : 'closed'" class="btn btn-sm btn-outline-primary btn-shuffle" (click)="shuffle()">Shuffle songs</button>
-    </p>
-    <p>
-      <button  class="btn btn-sm btn-outline-success btn-play" (click)="play(album)">Play Album</button>
-    </p>
-    <p class="btn_hide">
-      <button class="btn btn-sm btn-outline-warning btn-hide" (click)="hide()">Hide Album</button>
-    </p>
-  </div>
-  <!-- vous pouvez également utiliser le pipe dans le template
-        c'est d'ailleur prévu pour ça
-        pipe shuffle(data) dans le template data | shuffle
-    -->
-    <!-- {{ [1,2,3,5] | shuffle | json }} -->
-    <!-- TODO afficher les morceaux de l'album -->
+    <img class="card-img-top" src="#" alt="Group Music">
+    <div class="card-body">
+        <h5 class="card-title">{{ album.title }}</h5>
+        <p class="card-text">{{ album.name }}</p>
+        <p class="btn_detail">
+            <button [@openClose]="isOpen? 'open' : 'closed'" class="btn btn-warning" (click)="shuffle()">Shuffle</button>
+        </p>
+        <button class="btn btn-primary" (click)="play(album)" [disabled]="!isActive">Play >></button>
+        <button class="btn btn-primary" (click)="stop(album)" [disabled]="isActive">Stop</button>
+        <p class="btn_detail">
+            <button class="btn btn-warning" (click)="hide()">Hide Album</button>
+        </p>
+    </div>
     <ul *ngIf="songs" class="list-group">
-        <li *ngFor="let song of songs" class="list-group-item">{{ song }}</li>
+        <li *ngFor="let song of songs; let index = index" [className]="current == (index + 1) && album.id == id ? 'list-group-item active' : 'list-group-item'" >
+          {{ song }}
+        </li>
     </ul>
 </div>
-

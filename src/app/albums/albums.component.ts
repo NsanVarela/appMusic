@@ -1,74 +1,54 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { Album } from '../album'; // def du type
 import { ALBUMS } from '../mock-albums'; // données d'exemple
 import { AlbumService } from '../album.service';
-import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-albums',
-  templateUrl: './albums.component.html',
-  styleUrls: ['./albums.component.scss']
+  selector: `app-albums`,
+  templateUrl: `./albums.component.html`,
+  styleUrls: [`./albums.component.scss`]
 })
 export class AlbumsComponent implements OnInit {
-
-  // One way property binding
-  private albumPerPage: number = environment.albumPerPage;
-  titlePage = `Page principale Albums Music`;
-  albums: Album[] = ALBUMS;
+  // one Way property binding
+  titlePage = `Page princpale Albums Music`;
+  albums: Album[] = [];
   selectedAlbum: Album;
-  selected: Album;
-  title: string;
-  albumId: string;
-  searchAlbum: Album[];
   isSearch = false;
-  page: any;
+  perPage = 3;
+  countAlbums = 0;
 
-  albumNotation: Album;
-
-  constructor(private route: ActivatedRoute , private albumS: AlbumService) {
-
-    // tester ici les méthodes demandées
-    // this.albumId = `1`;
-
-    // this.albumS.getAlbums();
-    this.albumS.getAlbum(this.albumId);
-    // this.albumS.getAlbumList(this.albumId);
-    // this.albumS.count();
-    // this.albumS.paginate(1, 3);
-    // this.albumS.getNotation();
-    // this.albumS.getAlbum(this.albumId).note;
+  constructor(private albumS: AlbumService) { // testez ici les méthodes demandées
+    // console.log(this.albumS.getAlbums());
+    // console.log(this.albumS.getAlbum("1"));
+    // const al = this.albumS.getAlbum("1");
+    // console.log(this.albumS.getAlbumList(al.id));
+    // let list = this.albumS.getAlbumList("14151");
+    // console.log(list ? list.list : null);
+    // this.countAlbums = this.albumS.count();
   }
 
+  // cycle de vie d'un component une fois que le component est monté dans le DOM
   ngOnInit() {
+    this.albums = this.albumS.paginate(0, this.perPage , (a, b) => b.duration - a.duration);
   }
 
   onSelect(album: Album) {
-    this.selectedAlbum = { ...album};
-    const id = this.selectedAlbum.id;
-    const albumList = this.albumS.getAlbumList(id);
-    console.log('albumList', albumList);
-  }
-
-  onChoose(album: Album) {
-    console.log('album :', album);
-    this.selected = { ...album};
-    const id = this.selected.id;
-    this.albumNotation = this.albumS.getAlbum(id);
-    console.log('albumNotation :', this.albumNotation);
-    return this.albumNotation;
+    // On crée un nouvel objet par rapport à l'objet album initial que l'on passe dans le select
+    this.selectedAlbum = { ...album };
   }
 
   playParent($event: Album) {
-    this.albums = ALBUMS.map(album => {
-      if (album.id === $event.id) {
-        album.status = 'on';
-        return album;
-      } else {
-        album.status = 'off';
-        return album;
-      }
-    });
+    // this.albums = ALBUMS.map(album => {
+    //   if (album.id === $event.id) {
+    //     album.status = `on`;
+    //     return album;
+    //   } else {
+    //     album.status = `off`;
+    //     return album;
+    //   }
+    // });
+    this.albumS.switchOn($event);
   }
 
   searchParent($event: Album[]) {
@@ -78,15 +58,15 @@ export class AlbumsComponent implements OnInit {
 
   // reload propre à ce component
   reload() {
-    this.albums = this.albumS.paginate(0, this.albumPerPage);
+    this.albums = this.albumS.paginate(0, this.perPage);
     this.isSearch = false;
   }
 
   // reload déclenché à partir d'un événement de l'enfant
   relaodParent($event: boolean) {
-    this.isSearch = false;
+    this.isSearch = false; // propre à ce component bouton rouge c'est autre chose (...)
     // remettre tous les albums
-    this.albums = this.albumS.paginate(0, this.albumPerPage);
+    this.albums = this.albumS.paginate(0, this.perPage);
   }
 
   paginateParent($event: { start: number, end: number }) {
@@ -94,9 +74,5 @@ export class AlbumsComponent implements OnInit {
     const { start, end } = $event;
     this.albums = this.albumS.paginate(start, end);
   }
-
-
-
-
 
 }
