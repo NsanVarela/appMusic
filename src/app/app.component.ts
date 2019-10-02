@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { interval, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HorlogeService } from './horloge.service';
+import { AlbumService } from './album.service';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,25 +12,35 @@ import { map } from 'rxjs/operators';
     ]
 })
 export class AppComponent {
-  title = `app-music`;
-  count: Observable<number>;
-  time;
+  title = 'AppMusic';
+  // tslint:disable-next-line: no-inferrable-types
+  navbarOpen: boolean = false;
+  hour: number = null;
+  minute: number = null;
+  second: number = null;
+  isConnected: boolean = false;
 
-  constructor() {
-    const intervalNumber = interval(1000);
+  constructor(private horloge: HorlogeService, private albumS: AlbumService, private authS: AuthService) {
 
-    const counter = intervalNumber.pipe(
-      map(seconds => {
-        const hours = Math.floor(seconds / 3600);
-        const min = Math.floor(seconds / 60);
-        return hours + ' h ' + (min - hours * 60) + ' min ' + (seconds - min * 60) + ' sec';
-      })
-    );
+    this.albumS.getAlbums().subscribe( albums => console.log(albums));
 
-    counter.subscribe(
-      num => {
-        return this.time = num;
-      }
-    );
+    this.horloge.getHorloge().subscribe(time => {
+      const { hour, minute, second } = time;
+
+      this.hour = hour;
+      this.minute = minute;
+      this.second = second;
+
+      this.isConnected = this.authS.isConnected();
+    });
   }
+
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
+  }
+
+  logout() {
+    this.authS.logout();
+  }
+
 }

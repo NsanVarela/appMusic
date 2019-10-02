@@ -17,11 +17,17 @@ export class List {
   list: Array<string>;
 }
 
+export class Time {
+  hour: number;
+  minute: number;
+  second: number;
+}
+
 export class StatusPlayer {
   albumId: string;
   song: string;
-  playing: boolean = false;
+  playing: boolean;
   current: number;
   total: number;
-  ratio: number = 0;
+  ratio: number;
 }

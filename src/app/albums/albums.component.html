@@ -10,11 +10,13 @@
         ></app-album-details>
     </div><!-- .video -->
     <div class="col-sm-8 music">
-        <app-paginate (paginate)="paginateParent($event)" [perPage]="perPage"></app-paginate>
+        <app-paginate  (paginate)="paginateParent($event)" [perPage]="perPage"  ></app-paginate>
         <button *ngIf="isSearch" type="button" class="btn btn-lg btn-danger">Résultat de la recherche...</button>
         <button *ngIf="isSearch" (click)="reload()" type="button" class="btn btn-lg btn-danger">Ré-affichez tous les albums.</button>
-        <!-- Albums -->
-        <div class="card" *ngFor="let album of albums; let index = index">
+        <!-- Albums
+        pipe async d'Angular permet de faire un subscribe sur l'observable, également valable sur une Promesse
+        -->
+        <div class="card" *ngFor="let album of albums | async; let index = index">
             <div class="card-header">
                 {{ index + 1 }} {{ album.ref }} <span *ngIf="album.status == 'on'">[play]</span>
             </div>

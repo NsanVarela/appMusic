@@ -1,0 +1,35 @@
+<app-paginate (paginate)="paginateParent($event)" [perPage]="perPage" ></app-paginate>
+<table class="table table-dark">
+  <thead>
+      <tr>
+          <th scope="col">#</th>
+          <th scope="col">Update</th>
+          <th scope="col">Name</th>
+          <th scope="col">Title</th>
+          <th scope="col">Duration</th>
+          <th scope="col">Price Ether</th>
+          <th scope="col">Songs</th>
+          <th scope="col">Delete</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let album of albums | async">
+          <th scope="row">{{ album.id }}</th>
+          <td>
+            <button class="btn btn-sm btn-outline-info nav-link">Update
+              <span class="sr-only">(current)</span>
+          </button>
+          </td>
+          <td>{{ album.name }}</td>
+          <td >{{ (album.title) }} </td>
+          <td>{{ album.duration}}</td>
+          <td>{{ album.price || 'no-price'}}</td>
+          <td>{{ (album.id | numberSongs) | async}}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-danger nav-link">Delete
+              <span class="sr-only">(current)</span>
+          </button></td>
+      </tr>
+  </tbody>
+</table>
+<app-paginate (paginate)="paginateParent($event)" [perPage]="perPage" ></app-paginate>

@@ -1,4 +1,4 @@
-<div *ngIf="total" class="alert alert-primary" role="alert">
+<div *ngIf="isPlaying" class="alert alert-primary" role="alert">
     <div class="progress">
         <div
         class="progress-bar"
@@ -7,4 +7,5 @@
             aria-valuemax="100"></div>
     </div>
     {{ current }} / {{ total }}
+    <button class="btn btn-primary">Stop >></button>
 </div>

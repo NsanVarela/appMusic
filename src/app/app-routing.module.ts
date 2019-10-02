@@ -5,32 +5,45 @@ import { AlbumsComponent } from './albums/albums.component';
 import { AlbumDescriptionComponent } from './album-description/album-description.component';
 import { LoginComponent } from './login/login.component';
 import { StatComponent } from './stat/stat.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { GuardService } from './guard.service';
+import { AlbumComponent } from './admin/album/album.component';
 
 const albumsRoutes: Routes = [
   {
-    path: 'albums',
+    path: `albums`,
     component: AlbumsComponent,
-    data: {state: 'home' }
+    data: {state: `home` }
   },
   {
-    path: '',
-    redirectTo: '/albums',
-    pathMatch: 'full'
+    path: ``,
+    redirectTo: `/albums`,
+    pathMatch: `full`
   },
   {
-    path: 'login',
+    path: `login`,
     component: LoginComponent,
-    data: {state: 'login' }
+    data: {state: `login` }
   },
   {
-    path: 'album/:id',
+    path: `logout`,
+    component: LoginComponent,
+    data: {state: `logout` }
+  },
+  {
+    path: `album/:id`,
     component: AlbumDescriptionComponent,
-    data: {state: 'description' }
+    data: {state: `description` }
   },
   {
-    path: 'stat',
+    path: `stat`,
     component: StatComponent,
-    data: {state: 'stat' }
+    data: {state: `stat` }
+  },
+  {
+    // path: `dashboard`, canActivate: [GuardService],
+    path: `dashboard`,
+    component: AlbumComponent
   }
 ];
 

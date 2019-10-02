@@ -10,13 +10,21 @@ import { Album } from '../album';
 })
 export class AlbumDescriptionComponent implements OnInit {
 
-  album: Album ;
+  album: Album;
 
-  constructor(private route: ActivatedRoute, private albumS: AlbumService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private albumS: AlbumService) {
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get(`id`);
-    this.album = this.albumS.getAlbum(id);
+    // on peut forcer le typage en lui imposant que l'on souhaite avoir un string
+    const id = this.route.snapshot.paramMap.get('id') as string;
+
+    this.albumS.getAlbum(id).subscribe(
+      album => { this.album = album;  }
+    );
   }
 
+  ngOnInit() {
+
+  }
 }

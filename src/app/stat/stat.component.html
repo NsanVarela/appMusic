@@ -12,10 +12,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let album of albums">
+        <tr *ngFor="let album of albums | async">
             <td>{{ album.ref }}</td>
             <td>{{ album.name }}</td>
-            <th >{{ numberSongs(album.id) }} </th>
+            <!-- On utilise un pipe pour récupérer le nombre de chanson par album -->
+            <th >{{ (album.id | numberSongs) | async }} </th>
             <!-- Pipe que l'on a définit pour calculer la moyenne -->
             <td>{{ album.note | avg }}</td>
         </tr>

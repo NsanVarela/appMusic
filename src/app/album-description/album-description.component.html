@@ -1,42 +1,33 @@
 <div class="card">
-  <div  class="card-header">
-    {{ album.ref }}
-    <span *ngIf="album.status === 'on'">
-      [play]
-    </span>
-  </div>
-  <img *ngIf="album.url" class="card-img-top" src="{{album.url}}" alt="Group Music">
-  <div class="card-body">
-    <h5 [ngClass]="{'card-title': true, 'card-title-search': isSearch}">
-        <a class="text-info" routerLink="/album/{{album.id}}">
-          {{ album.title }}
-        </a>
-    </h5>
-    <p class="card-text">
-      {{ album.description }}
-    </p>
-    <ul *ngIf="album.tags" class="list-inline">
-      <li class="list-inline-item" *ngFor="let word of album.tags">
-        <span class="badge badge-info">
-          {{ word }}
-        </span>
-      </li>
-    </ul>
-    <a class="btn btn-outline-dark" href="#" role="button">
-      en
-    </a>
-    <ng-template [ngIf]="album.like">
-      <img class="glyph-icon" src="./assets/svg/si-glyph-heart.svg" />
-      <small>
-        {{ album.like }}
-      </small>
-    </ng-template>
-
-    <ng-template [ngIf]="album.duration">
-      <img class="glyph-icon" src="./assets/svg/si-glyph-timer.svg" />
-      <small>
-        {{ album.duration }} min
-      </small>
-    </ng-template>
-  </div>
-</div>
+    <p *ngIf="!album">loading description ...</p>
+    <div class="card-header">
+       {{ album.ref }} <span *ngIf="album.status == 'on'">[play]</span>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">
+            <!-- une uri avec un paramètre dynamique qui est conforme à la politique défini dans le router -->
+            <a routerLink="/album/{{ album.id }}">{{album.title}}</a>
+        </h5>
+        <p class="card-text">{{ album.description }}</p>
+        <ul *ngIf="album.tags" class="list-inline">
+            <li class="list-inline-item" *ngFor="let tag of album.tags">
+                <span class="badge badge-info">{{ tag }}</span>
+            </li>
+        </ul>
+        <a class="btn btn-outline-primary" href="#" role="button">fr</a>
+        <a class="btn btn-outline-dark" href="#" role="button">guitar</a>
+        <ng-template [ngIf]="album.like">
+            <img class="glyph-icon" src="./assets/svg/si-glyph-heart.svg" />
+            <small>{{ album.like }}</small>
+        </ng-template>
+        <ng-template [ngIf]="album.duration">
+            <img class="glyph-icon" src="./assets/svg/si-glyph-timer.svg" />
+            <small>{{ album.duration }} min</small>
+        </ng-template>
+        <ng-template [ngIf]="album.url">
+            <div class="picture">
+                <img src="{{ album.url }}" />
+            </div>
+        </ng-template>
+    </div>
+</div><!-- .card -->

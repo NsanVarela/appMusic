@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { Album, List } from '../album';
+import { Album, List, StatusPlayer } from '../album';
 import { AlbumService } from '../album.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -33,49 +33,61 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class AlbumDetailsComponent implements OnInit, OnChanges {
 
   @Input() album: Album;
-  // tslint:disable-next-line: no-output-on-prefix
   @Output() onPlay: EventEmitter<Album> = new EventEmitter();
-
-  hideAlbum = true;
+  hideAlbum: boolean = true; // par défaut on le cache
   songs: string[];
   isOpen = true;
-  id: string = null;
-  current: number = null;
-  isActive = true;
+  status: StatusPlayer;
+  isPlaying: boolean = false;
 
-  constructor( private albumS: AlbumService ) { // En premier, avant montage dans le dom'
-    this.albumS.statusPlayer.subscribe( status => {
-      this.id = status.id;
-      this.current = status.current;
-    });
+  // 1/ execute en premier à l'instanciation du component et une fois
+  constructor(
+    private albumS: AlbumService
+
+    ) {
+    // console.log('En premier avant montage dans le dom');
+
+    // this.albumS.statusPlayer.subscribe( status => {
+    //  this.status = status
+    // })
+
+    this.albumS.buttonPlay.subscribe(status => this.isPlaying =  status );
   }
 
-  ngOnInit() { // 2/ au montage du template dans le DOM et une fois
+  // 2/ au montage du template dans le DOM et une fois
+  ngOnInit() {
+    // console.log('après montage dans le DOM')
   }
 
-  ngOnChanges() { // après montage dans le DOM et quand on passe une valeur parent/enfant @Input'
+  // 2/ et lorsqu'on passe une valeur dans le selecteur @Input
+  ngOnChanges() {
+    // console.log('après montage dans le DOM et quand on passe une valeur parent/enfant @Input');
+    // console.log(this.album); // Au montage cette valeur est null
+
+    // le fait d'envoyer une nouvelle copie à chaque fois permet de réafficher l'album
+    // nottamment celui sur lequel on vient de cliqué
     if (this.album) {
       this.hideAlbum = false; // on rend visible l'album une fois que l'on a passé un album depuis le parent
-      const list: List = this.albumS.getAlbumList(this.album.id);
-      this.songs = list ? list.list : [];
+      this.songs = null; // loading important de mettre cette variable à null
+
+      // c'est cette partie qui peut prendre du temps
+      this.albumS.getAlbumList(this.album.id).subscribe(songs => this.songs = songs);
     }
   }
 
   play(album: Album) {
-    if (this.album) {
-      this.albumS.switchOn(album);
-      this.isActive = false;
-    }
     this.onPlay.emit(album);
   }
 
-  stop(album: Album) {
-    this.isActive = true;
-  }
-
+  // le service AlbumService une seule instance pour l'application
+  // mettre à jour les données ici les mettra ailleurs également
+  // je vous ai mis dans la fonction hide une méthode change pour montrer que l'on change l'objet la valeur de l'objet albums
+  // de manière globale
   hide() {
     this.hideAlbum = true;
     this.albumS.initStatus();
+    // ceci est un test pour vous montrer que le service est partagé
+    this.albumS.change(`1`, `Hello Je change ta valeur${Math.random()}`);
   }
 
   shuffle() {
@@ -84,9 +96,16 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
       this.toggle();
     }
   }
-
   toggle() {
     this.isOpen = !this.isOpen;
+  }
+
+  stop() {
+    this.albumS.switchOff(this.album).subscribe(
+      album => {
+        // todo agir sur la bar de progression
+      }
+    );
   }
 
 }

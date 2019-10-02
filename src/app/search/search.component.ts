@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AlbumService } from '../album.service';
 import { Album } from '../album';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -12,22 +13,22 @@ export class SearchComponent implements OnInit {
 
   @Output() searchAlbums: EventEmitter<Album[]> = new EventEmitter();
   @Output() reload: EventEmitter<boolean> = new EventEmitter();
+
+  // tslint:disable-next-line: no-inferrable-types
+  word: string = ``;
   isSubmit = false;
-  word: string;
 
   constructor(private albumS: AlbumService) { }
 
   ngOnInit() { }
 
   onSubmit(form: NgForm) {
-    const word = form.value[`word`];
-    const results = this.albumS.search(word);
-
-    if (results) {
-      this.searchAlbums.emit(results);
-
-      this.isSubmit = true; // on a fait une requête pour récupérer les albums
-    }
+    this.albumS.search(form.value[`word`]).subscribe(albums => {
+      if (albums.length > 0) {
+        this.searchAlbums.emit(albums);
+        this.isSubmit = true;
+      }
+    });
   }
 
   // on vérifie la longueur d'une chaîne de caractères qui passe dans le champ input
@@ -37,7 +38,7 @@ export class SearchComponent implements OnInit {
     console.log($event.length);
 
     if ($event.length === 0  && this.isSubmit) {
-      console.log('Ok event reload');
+      console.log(`Ok event reload`);
       this.reload.emit(true);
       this.isSubmit = false;
     }

@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { AlbumService } from '../album.service';
 
-import { Subscription, Subject } from 'rxjs';
-
 @Component({
   selector: 'app-paginate',
   templateUrl: './paginate.component.html',
@@ -13,31 +11,29 @@ export class PaginateComponent implements OnInit, OnDestroy {
   @Input() perPage: number; // dans le selecteur du paginate depuis le parent
 
   pages: number[] = []; // numéro des pages 1, 2, 3, ...
-  total: number = 0; // total des albums
+  total = 0; // total des albums
   currentPage: number; // page courante
-  numberPages: number = 0;
+  numberPages = 0;
 
   constructor(private aS: AlbumService) {
-    this.total = this.aS.count();
-    console.log(this.total);
+    this.aS.count().subscribe(count => {
+      this.total = count;
+      // initialiser la création des numéros de page
+      this.init();
 
-    // this.total = this.numberAlbums;
+      // il faut souscrire à l'observable
+      // écoute et l'observer reçoit l'info
+      if (this.aS.sendCurrentNumberPage.closed) {
+        this.aS.initSubject();
+      }
+
+      this.aS.sendCurrentNumberPage.subscribe(
+        page => { console.log(page); this.currentPage = page; }
+      );
+    });
   }
 
-  ngOnInit() {
-    // initialiser la création des numéros de page
-    this.init();
-
-    // il faut souscrire à l'observable
-    // écoute et l'observer reçoit l'info
-    if ( this.aS.sendCurrentNumberPage.closed ) {
-      this.aS.initSubject();
-    }
-
-    this.aS.sendCurrentNumberPage.subscribe(
-      page => { console.log(page); this.currentPage = page; }
-    );
-  }
+  ngOnInit() {}
 
   init(page: number = 1) {
     this.numberPages = Math.ceil(this.total / this.perPage);

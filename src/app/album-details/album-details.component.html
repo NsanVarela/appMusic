@@ -6,15 +6,22 @@
         <p class="btn_detail">
             <button [@openClose]="isOpen? 'open' : 'closed'" class="btn btn-warning" (click)="shuffle()">Shuffle</button>
         </p>
-        <button class="btn btn-primary" (click)="play(album)" [disabled]="!isActive">Play >></button>
-        <button class="btn btn-primary" (click)="stop(album)" [disabled]="isActive">Stop</button>
+        <button [disabled]="isPlaying == true" class="btn btn-primary" (click)="play(album)">Play >></button>
+        <button [disabled]="isPlaying != true" class="btn btn-primary" (click)="stop(album)"> Stop >></button>
         <p class="btn_detail">
             <button class="btn btn-warning" (click)="hide()">Hide Album</button>
         </p>
     </div>
-    <ul *ngIf="songs" class="list-group">
-        <li *ngFor="let song of songs; let index = index" [className]="current == (index + 1) && album.id == id ? 'list-group-item active' : 'list-group-item'" >
-          {{ song }}
-        </li>
+
+    <ul *ngIf="songs; else elseSongs" class="list-group">
+        <li *ngFor="let song of songs; let index = index"
+        [className]="status && song == status.song && album.id == status.albumId ? 'list-group-item active' : 'list-group-item'"
+        >
+        {{ song }} </li>
     </ul>
+    <ng-template #elseSongs>
+        <ul class="list-group">
+            <li class="list-group-item">Loading...</li>
+        </ul>
+    </ng-template>
 </div>
