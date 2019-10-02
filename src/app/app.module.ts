@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import * as firebase from 'firebase';
+require('dotenv').config();
 
 import { AppComponent } from './app.component';
 import { AlbumsComponent } from './albums/albums.component';
@@ -23,14 +24,14 @@ import { AdminModule } from './admin/admin.module';
 import { ShareModule } from './share/share.module';
 
 const firebaseConfig = {
-  apiKey: `AIzaSyDuWalIkcp74skzkd9NkbpAzze6bbfFJ28`,
-  authDomain: `appmusic-77c24.firebaseapp.com`,
-  databaseURL: `https://appmusic-77c24.firebaseio.com`,
-  projectId: `appmusic-77c24`,
-  storageBucket: `appmusic-77c24.appspot.com`,
-  messagingSenderId: `68259435691`,
-  appId: `1:68259435691:web:8e6c57f3403ba3bd77d3ee`,
-  measurementId: `G-JSWKR51BP8`
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.DATABASE_URL,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID
 };
 // initialisez Firebase
 firebase.initializeApp(firebaseConfig);
