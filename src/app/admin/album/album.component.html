@@ -26,7 +26,7 @@
           <td>{{ album.name }}</td>
           <td >{{ (album.title) }} </td>
           <td>{{ album.duration}}</td>
-          <td>{{ album.price || 'no-price'}}</td>
+          <td>{{ 'no-price'}}</td>
           <td>{{ (album.id | numberSongs) | async}}</td>
           <td>
             <button class="btn btn-sm btn-outline-danger nav-link">Delete

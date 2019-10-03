@@ -5,9 +5,9 @@ import { AlbumsComponent } from './albums/albums.component';
 import { AlbumDescriptionComponent } from './album-description/album-description.component';
 import { LoginComponent } from './login/login.component';
 import { StatComponent } from './stat/stat.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { GuardService } from './guard.service';
 import { AlbumComponent } from './admin/album/album.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const albumsRoutes: Routes = [
   {
@@ -44,6 +44,10 @@ const albumsRoutes: Routes = [
     path: `dashboard`, canActivate: [GuardService],
     // path: `dashboard`,
     component: AlbumComponent
+  },
+  {
+    path: `**`,
+    component: PageNotFoundComponent
   }
 ];
 

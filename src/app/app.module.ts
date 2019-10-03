@@ -22,10 +22,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AdminModule } from './admin/admin.module';
 import { ShareModule } from './share/share.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // initialisez Firebase
 firebase.initializeApp(environment.firebase);
-
 
 @NgModule({
   declarations: [
@@ -40,14 +40,15 @@ firebase.initializeApp(environment.firebase);
     AvgPipe,
     AudioPlayerComponent,
     DashboardComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
+    AdminModule, // Charger les routes child avant AppRouting Module pour qu'elle soient prises en compte (ex: pageNotFound)
     AppRoutingModule,
     // FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AdminModule,
     ShareModule
   ],
   providers: [ShufflePipe, AvgPipe], // le pipe ici pour pouvoir l'utiliser comme un service
