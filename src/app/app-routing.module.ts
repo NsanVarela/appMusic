@@ -41,8 +41,8 @@ const albumsRoutes: Routes = [
     data: {state: `stat` }
   },
   {
-    // path: `dashboard`, canActivate: [GuardService],
-    path: `dashboard`,
+    path: `dashboard`, canActivate: [GuardService],
+    // path: `dashboard`,
     component: AlbumComponent
   }
 ];

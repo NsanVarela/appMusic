@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HorlogeService } from './horloge.service';
 import { AlbumService } from './album.service';
 import { AuthService } from './auth.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { AuthService } from './auth.service';
     // animation triggers ...
     ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'AppMusic';
   // tslint:disable-next-line: no-inferrable-types
   navbarOpen: boolean = false;
@@ -35,6 +36,18 @@ export class AppComponent {
     });
   }
 
+  ngOnInit() {
+    firebase.auth().onAuthStateChanged(
+      (user) => {
+        if (user) {
+          this.isConnected = true;
+        } else {
+          this.isConnected = false;
+        }
+      }
+    );
+  }
+
   toggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
   }
@@ -42,5 +55,6 @@ export class AppComponent {
   logout() {
     this.authS.logout();
   }
+
 
 }

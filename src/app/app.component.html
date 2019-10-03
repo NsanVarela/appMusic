@@ -12,6 +12,16 @@
                       <span class="sr-only">(current)</span>
                   </button>
               </li>
+              <li class="nav-item active">
+                  <button class="btn btn-sm btn-outline-info nav-link" routerLink="/stat" routerLinkActive="active">Statistiques
+                      <span class="sr-only">(current)</span>
+                  </button>
+              </li>
+              <li class="nav-item active" *ngIf="isConnected && isConnected !== null">
+                <button class="btn btn-sm btn-outline-info nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard
+                    <span class="sr-only">(current)</span>
+                </button>
+              </li>
               <li class="nav-item active" *ngIf="!isConnected && isConnected !== null">
                   <button class="btn btn-sm btn-outline-info nav-link" routerLink="/login" routerLinkActive="active">Se connecter
                       <span class="sr-only">(current)</span>
@@ -21,11 +31,6 @@
                 <button class="btn btn-sm btn-outline-info nav-link" routerLink="/logout" routerLinkActive="active">Se déconnecter
                     <span class="sr-only">(current)</span>
                 </button>
-            </li>
-              <li class="nav-item active">
-                  <button class="btn btn-sm btn-outline-info nav-link" routerLink="/stat" routerLinkActive="active">Statistiques
-                      <span class="sr-only">(current)</span>
-                  </button>
               </li>
               <li>
                 <a class="navbar-brand">

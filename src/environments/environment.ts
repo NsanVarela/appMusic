@@ -4,7 +4,17 @@
 
 export const environment = {
   production: false,
-  albumPerPage : 3
+  albumPerPage : 3,
+  firebase: {
+    apiKey: `AIzaSyDuWalIkcp74skzkd9NkbpAzze6bbfFJ28`,
+    authDomain: `appmusic-77c24.firebaseapp.com`,
+    databaseURL: `https://appmusic-77c24.firebaseio.com`,
+    projectId: `appmusic-77c24`,
+    storageBucket: `appmusic-77c24.appspot.com`,
+    messagingSenderId: `68259435691`,
+    appId: `1:68259435691:web:8e6c57f3403ba3bd77d3ee`,
+    measurementId: `G-JSWKR51BP8`
+  }
 };
 
 /*
