@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   hour: number = null;
   minute: number = null;
   second: number = null;
-  isConnected: boolean = false;
+  isConnected: boolean;
 
   constructor(private horloge: HorlogeService, private albumS: AlbumService, private authS: AuthService) {
 
