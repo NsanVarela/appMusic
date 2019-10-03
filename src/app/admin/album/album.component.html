@@ -19,7 +19,7 @@
       <tr *ngFor="let album of albums | async">
           <th scope="row">{{ album.id }}</th>
           <td>
-            <button class="btn btn-sm btn-outline-info nav-link">Update
+            <button class="btn btn-sm btn-outline-info nav-link" routerLink="/admin/update/{{album.id}}" routerLinkActive="active">Update
               <span class="sr-only">(current)</span>
             </button>
           </td>

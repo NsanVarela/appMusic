@@ -19,7 +19,7 @@ export class AddAlbumComponent implements OnInit {
   constructor(private albumS: AlbumService, private fb: FormBuilder, private router: Router) {
     // STUB
     this.album = {
-      id: Math.random().toString(32),
+      id: null,
       name: ``,
       title: ``,
       ref: ``,

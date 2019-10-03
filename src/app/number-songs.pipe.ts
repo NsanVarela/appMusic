@@ -10,7 +10,6 @@ export class NumberSongsPipe implements PipeTransform {
   constructor(private albumS: AlbumService) {}
 
   transform(id: string): Observable<number> {
-    console.log('innnnn');
     return this.albumS.getAlbumListNumber(id); // nombre de chanson pour un album dans le service
   }
 

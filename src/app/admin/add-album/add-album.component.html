@@ -51,17 +51,17 @@
     <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
   </div>
   <div class="form-group col-md-12">
-      <label for="price">
-        Prix en Ether (prix + 8%) : <small> {{ priceTTC.value || '0' }} Eth </small>
-        <br />
-        <small> Renseigner le prix HT ci-dessous le prix TTC sera inséré en base de données.</small>
-      </label>
-      <input formControlName="price" type="text" class="form-control" id="price" aria-describedby="emailHelp">
-      <div *ngIf="price.invalid && price.touched" class="alert alert-danger">
-          <div *ngIf="price.errors.required">
-            Error min 10
-          </div>
+    <label for="price">
+      Prix en Ether (prix + 8%) : <small> {{ priceTTC.value || '0' }} Eth </small>
+      <br />
+      <small> Renseigner le prix HT ci-dessous le prix TTC sera inséré en base de données.</small>
+    </label>
+    <input formControlName="price" type="text" class="form-control" id="price" aria-describedby="emailHelp">
+    <div *ngIf="price.invalid && price.touched" class="alert alert-danger">
+      <div *ngIf="price.errors.required">
+        Error min 10
       </div>
+    </div>
   </div>
 
   <button [disabled]="albumForm.invalid" type="submit" class="btn btn-primary">Add</button>

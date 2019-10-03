@@ -4,17 +4,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GuardService } from '../guard.service';
 import { AddAlbumComponent } from './add-album/add-album.component';
-import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
+import { UpdateAlbumComponent } from './update-album/update-album.component';
 
 const adminRoutes: Routes = [
   {
-    path: 'admin/add', canActivate: [GuardService],
+    path: `admin/add`, canActivate: [GuardService],
     component: AddAlbumComponent
   },
-  // {
-  //   path: `**`,
-  //   component: PageNotFoundComponent
-  // }
+  {
+    path: `admin/update/:id`, canActivate: [GuardService],
+    component: UpdateAlbumComponent
+  }
 ];
 
 @NgModule({
