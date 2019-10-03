@@ -4,12 +4,14 @@ import { Album, List, StatusPlayer } from './album';
 import { ALBUMS, ALBUM_LISTS } from './mock-albums';
 import { ShufflePipe } from './shuffle.pipe';
 
-import { Subject, Observable, interval, throwError } from 'rxjs';
+import { Subject, Observable, throwError } from 'rxjs';
 import { AvgPipe } from './avg.pipe';
 
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { map, take, takeUntil, catchError } from 'rxjs/operators';
-import { AlbumsComponent } from './albums/albums.component';
+import { map, catchError } from 'rxjs/operators';
+
+// A utliser partout où on retourne un Album[]
+import * as _ from 'lodash';
 
 // type de la fonction d'ordre permet de créer un type function
 type Order = (a: Album, b: Album) => number;
@@ -40,7 +42,7 @@ export class AlbumService {
   defaultOrder: Order = (a: Album, b: Album) => a.duration - b.duration; // factorise l'ordre pour le service
 
   private errorHandler = (error) => {
-    if (error.erro instanceof ErrorEvent) {
+    if (error.error instanceof ErrorEvent) {
       console.error(error.error.message);
     } else {
       console.error(error.status);
@@ -66,6 +68,7 @@ export class AlbumService {
 
   getAlbums(order: Order = this.defaultOrder): Observable<Album[]> {
     return this.http.get<Album[]>(this.albumsUrl + '/.json', httpOptions).pipe(
+      map(albums =>  _.values(albums) ),
       map(albums => {
         return this.albums.sort(order);
       })
@@ -126,6 +129,7 @@ export class AlbumService {
 
   paginate(start: number, end: number, order: Order = this.defaultOrder): Observable<Album[]> {
     return this.http.get<Album[]>(this.albumsUrl + '/.json', httpOptions).pipe(
+      map(albums =>  _.values(albums) ),
       map(albums => {
         // l'ordre se fait de manière globale on fait d'abord le sort puis on fait le slice
         return albums.sort(order).slice(start, end);
@@ -135,6 +139,7 @@ export class AlbumService {
 
   specialOrderPaginate(start: number, end: number, order: Order = this.defaultOrder): Observable<Album[]> {
     return this.http.get<Album[]>(this.albumsUrl + '/.json', httpOptions).pipe(
+      map(albums =>  _.values(albums) ),
       map(albums => {
         // l'ordre se fait de manière globale on fait d'abord le sort puis on fait le slice
         return albums.slice(start, end).sort(order);
@@ -144,6 +149,7 @@ export class AlbumService {
 
   search(word: string, order: Order = this.defaultOrder): Observable<Album[]> {
     return this.http.get<Album[]>(this.albumsUrl + '/.json', httpOptions).pipe(
+      map(albums =>  _.values(albums) ),
       map(albums => {
         const Albums = [];
         albums.forEach(album => {
@@ -239,6 +245,16 @@ export class AlbumService {
     //   clearInterval(interval);
     // }
 
+  }
+
+  addAlbum(album: Album): Observable<any> {
+    return this.http.post<void>(this.albumsUrl + `/.json`, album, httpOptions);
+  }
+
+  updateAlbum(id: string, album: Album): Observable<any> {
+    return this.http.put<any>(`${this.albumsUrl}/${id}/.json`, album, httpOptions).pipe(
+      catchError(this.errorHandler)
+    );
   }
 
 }

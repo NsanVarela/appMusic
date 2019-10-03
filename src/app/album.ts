@@ -6,10 +6,12 @@ export class Album {
   description: string;
   duration: number;
   status: string;
-  note: Array<number>;
   url?: string;
-  tags?: Array<string>;
   like?: string;
+  tags?: Array<string>;
+  note?: Array<number>;
+  price?: number;
+  priceTTC?: number;
 }
 
 export class List {
